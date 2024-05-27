@@ -1,0 +1,1 @@
+// no code written here, all js code is imbedded into the html file; this is due to difficulty manipulating video size and playback, sound and visual, and finally the placement of the text above the video

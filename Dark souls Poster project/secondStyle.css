@@ -1,0 +1,23 @@
+html {
+    margin: 100;
+    padding: 100;
+}
+
+canvas {
+    display: block;
+}
+
+body {
+    background-color: black;
+  }
+
+
+a {
+  background-color: blanchedalmond;
+  color: black;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  width: fit-content;      /* allows for the bar of colour to only cover the text and not the whole line */
+}

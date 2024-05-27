@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="sketch.js"></script>
+  <script src="libraries/p5.min.js"></script>
+  <script src="libraries/p5.sound.min.js"></script>
+  <link rel="shortcut icon" href="#">
+</head>
+<body>
+  <!-- Container for the video, allows the video to be edited to the top of the page -->
+  <h1 id="heading">The Ringed City: at the End of Time</h1>
+  <div id="video-container"></div>
+  
+
+  <script>
+    let video1, video2;               // coded this way so the video appears at the top of the page
+    let currentVideo;
+    let button;
+    let volSlider;
+    let volText;
+
+    function setup() {
+
+      // calls video from the media folder, using it directly
+      video1 = createVideo('media/Gale.mp4');                  // video used captured by me using my xbox
+      video2 = createVideo('media/Hollow Gale.mp4');
+      video1.size(1000, 600);
+      video1.parent('video-container');         // used to call the id of the video so that the video can be placed at the top of the page with text below aswell as allows easy use of button control on the video, sound or visual struggled otherwise ref: https://p5js.org/reference/#/p5.Element/parent
+      video2.size(1000, 600);
+      video2.parent('video-container');
+      
+      // Hide the videos initially so that they don not overlapp with one another or stack opon  each other on the page
+      video1.hide();
+      video2.hide();    
+
+      currentVideo = video1;
+      currentVideo.loop();
+      currentVideo.show();
+
+      
+      // Separatly created the switch video button inside the setup from the other two so that the button can be easily moved and customised around the video
+      button = createButton('Hollowfy Gale');
+      button.position(1300, 300);
+      button.mousePressed(switchVideo);
+
+      button = createButton('Play Video');
+      button.position(100, 300);
+      button.mousePressed(playVideo);
+
+      button = createButton('Pause Video');
+      button.position(100, 450);
+      button.mousePressed(pauseVideo);
+
+      // Creating volume slider with sound values which can mute the video or increase volume, also has custom values so it can be moved to the side of the video
+      volSlider = createSlider(0.0, 3.0, 1.5, 0.01);     // edited from https://www.geeksforgeeks.org/p5-mediaelement-volume-method/
+      volSlider.position(1300, 500);
+      volSlider.input(changeVol);   
+      
+      volText = createElement('volText', 'Volume');   // creating the text for the question of the password
+      volText.position(1300, 450);
+    }
+
+    function playVideo() {
+      currentVideo.play();               // Both link to the buttons and tell then to play or pause both videos
+    }
+
+    function pauseVideo() {
+      currentVideo.pause();
+    }
+
+    function switchVideo() {             // function used to switch between video, used so that both dont play at once and so for interaction can be used to switch between the two
+      if (currentVideo === video1) {
+        currentVideo.hide();
+        currentVideo = video2;
+        video1.stop();
+        video2.loop();
+        video2.show();
+      } else {
+        currentVideo.hide();
+        currentVideo = video1;
+        video2.stop();
+        video1.loop();
+        video1.show();
+      }
+    }
+
+    function changeVol() {                   // function for an active volume slider 
+      let volumeVal = volSlider.value();
+      currentVideo.volume(volumeVal);
+    }                                                   // text below taken from https://darksouls.fandom.com/wiki/Slave_Knight_Gael and https://darksouls.fandom.com/wiki/First_Flame
+  </script>
+
+  
+  <h2>Slave Knight Gale</h2>
+  <h3>"The red-hooded, wandering slave knight Gael sought the blood of the dark soul as pigment for the Painted World. But Gael knew he was no Champion, that the dark soul would likely ruin him and that he had little hope of a safe return."</h3>
+  <h4>Gael was once a slave knight, a category of knights who, as they were Undead, were used as fodder in the bleakest of battles and even if they grew decrepit, their skin charred black, their bones twisted and they went mad were never relived from duty, their stature signified by their vibrant red hoods. At one point he managed to free himself from his life of bloody battles and ended up in the Painted World of Ariandel, a refuge for the forlorns, unwanted souls who had no place to call home. He eventually met the Painter, a girl called "Lady" by the corvian inhabitants of the Painted World and who possesses such great knowledge about the First Flame and the Dark Soul that she is able to use them to paint a world, and acted as a parental figure for her, such that she calls him "Uncle Gael".
+    At a certain point Sister Friede, an Unkindled who tried to link the First Flame but failed and was reduced to ashes, entered the painted world and discovered a people that she wished to protect, taking on the form that its inhabitants yearned for and coming to consider that place as her new home. The inhabitants of the painted world knew that when the time came and their world began to rot they would have to burn it with the Flame and then restore it and bring it back to life, a task entrusted to Father Ariandel. However, Friede opposed their wish, preferring a slow death in the rot to the changing of the Flame, and convinced Ariandel to hold back the Flame with his blood, while the Corvian Knights infatued with her "protected" the painting and even killed their own brethren who opposed her.
+    </h4>
+  <h4>When the Painter was imprisoned in the library of the corvian village, Gael escaped from the painting, taking with him a rotten scrap of it and began looking for an Unkindled. In fact, in the painted world there was a prophecy telling that when the Ashes would become two, their Flame would return to burn the rot away, and so he needed to find an Ashen One that could kindle it and show it to her lady. After a long unsuccessful search, Gael would find himself in the Cleansing Chapel where he remained praying to Caitha, mother of the forlorns, so that his wish could be granted by the goddess. Gael finally encountered the Ashen One during his journey through Lothric and managed to convince them to touch the scrap of painting, sending them to the Painted World of Ariandel through his piece of the painting.
+    Gael would thus help the Ashen One in his battle against Sister Friede and Father Ariandel, killing them and reigniting the Flame they were keeping contained, finally allowing his lady to see it. The Painter would have resumed painting a new world in the cathedral, like she promised to Gael, but for the cold and gentle place that she had in mind to create, she also needed a special pigment: the Dark Soul, the primordial Lord Soul discovered by the Furtive Pygmy and used to create humankind.
+    </h4>  
+  <h4>His search continued until the end of the world itself, when it was now reduced to an expanse of dust, ash and rubble, but the knight was finally successful, reaching the Ringed City where the Dark Soul was contained. On the ruins of the city he found the Pygmy Kings, holders of the Dark Soul inherited from the Primordial Pygmy, however, their blood had dried long ago over their ages of inaction, therefore making it useless for the painting of his Lady. Determined to complete his mission, Gael slaughtered the Pygmies with his sword before eating and drinking the dried Dark Souls from their bodies, in a desperate attempt to take it for himself and make it strong enough to be useful again. However it would prove too powerful for him, and when the Ashen One finally reunites with Gael at the end of time, he has been fully consumed both both physically and mentally by the Dark Soul and demands their portion of it, attacking them in a rage when they refuse. He is finally struck down, allowing the Ashen One to obtain his blood filled with the Dark Soul to use as a pigment for his Lady, thus fulfilling his final duty in death.</h4>
+  <ol>                                                        
+    <li>With Gale defeated by your hands</li>
+    <li>The Fire still fades</li>
+    <li>You must make your choice</li>
+    <li>Visit the kiln and decide the future</li>
+  </ol>
+  <a href="secondIndex.html">To the Kiln of the First Flame</a>  
+  <p class="closing">Many Lords of Cinder had come and passed and the Age of Fire had persevered. However, when the new chosen Lord, Prince Lothric, refused to link the fire, a desperate attempt to save the fading Flame began. Four Lords of Cinder were resurrected to link the fire once more, however they too chose to abandon their duties, forcing youself, the Ashen One, to gather their Souls and link the First Flame yourself.</p>
+  
+</body>
+</html>
+
+
